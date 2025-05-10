@@ -3,6 +3,7 @@
 ## Projeto para a matéria de Teste de Software da Universidade Católica de Brasília
 
 Link para o repositório original: https://github.com/MrRioja/daily-diet-api
+Modificado por: https://github.com/ldiasm/daily-diet-api/tree/development
 
 # TL;DR: Daily Diet
 
