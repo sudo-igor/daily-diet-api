@@ -1,0 +1,200 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 6,
+    "passes": 6,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-05-10T04:27:20.034Z",
+    "end": "2025-05-10T04:27:21.274Z",
+    "duration": 1240,
+    "testsRegistered": 6,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "3d9f43ba-e102-4925-a168-1e7a5888b7c8",
+      "title": "",
+      "fullFile": "cypress\\e2e\\02-meals.cy.js",
+      "file": "cypress\\e2e\\02-meals.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "38535717-1a00-487e-9d15-c6833546b24d",
+          "title": "02. API de Refeições",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "M01: Deve criar uma nova refeição",
+              "fullTitle": "02. API de Refeições M01: Deve criar uma nova refeição",
+              "timedOut": null,
+              "duration": 675,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const meal = {\n  name: 'Teste de Refeição',\n  description: 'Descrição do teste de refeição',\n  date: new Date().toISOString().split('T')[0],\n  time: '12:00',\n  onDiet: true,\n  calories: 500\n};\ncy.request({\n  method: 'POST',\n  url: '/v1/meals',\n  headers: {\n    Cookie: `sessionId=${sessionId}`\n  },\n  body: meal\n}).then(response => {\n  expect(response.status).to.eq(201);\n  expect(response.body).to.have.property('meal');\n  expect(response.body.meal[0]).to.have.property('id');\n  // Salvar o ID da refeição para uso nos outros testes\n  mealId = response.body.meal[0].id;\n  cy.log(`Refeição criada com ID: ${mealId}`);\n});",
+              "err": {},
+              "uuid": "5b6450dc-c651-475c-85b7-5ece330441c3",
+              "parentUUID": "38535717-1a00-487e-9d15-c6833546b24d",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "M02: Deve listar as refeições do usuário",
+              "fullTitle": "02. API de Refeições M02: Deve listar as refeições do usuário",
+              "timedOut": null,
+              "duration": 75,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  method: 'GET',\n  url: '/v1/meals',\n  headers: {\n    Cookie: `sessionId=${sessionId}`\n  }\n}).then(response => {\n  expect(response.status).to.eq(200);\n  expect(response.body).to.have.property('meals');\n  expect(response.body.meals).to.be.an('array');\n  expect(response.body.meals.length).to.be.at.least(1);\n});",
+              "err": {},
+              "uuid": "08d82512-79a5-4f64-955d-aa2a87650131",
+              "parentUUID": "38535717-1a00-487e-9d15-c6833546b24d",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "M03: Deve obter uma refeição específica",
+              "fullTitle": "02. API de Refeições M03: Deve obter uma refeição específica",
+              "timedOut": null,
+              "duration": 60,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Verificar se temos um ID de refeição válido\nexpect(mealId).to.not.be.null;\ncy.log(`Buscando refeição com ID: ${mealId}`);\ncy.request({\n  method: 'GET',\n  url: `/v1/meals/${mealId}`,\n  headers: {\n    Cookie: `sessionId=${sessionId}`\n  }\n}).then(response => {\n  expect(response.status).to.eq(200);\n  expect(response.body).to.have.property('meal');\n  expect(response.body.meal).to.have.property('id', mealId);\n});",
+              "err": {},
+              "uuid": "a6578363-9430-4046-8b9f-96555203593c",
+              "parentUUID": "38535717-1a00-487e-9d15-c6833546b24d",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "M04: Deve editar uma refeição",
+              "fullTitle": "02. API de Refeições M04: Deve editar uma refeição",
+              "timedOut": null,
+              "duration": 135,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Verificar se temos um ID de refeição válido\nexpect(mealId).to.not.be.null;\ncy.log(`Editando refeição com ID: ${mealId}`);\nconst updatedMeal = {\n  name: 'Refeição Atualizada',\n  description: 'Descrição atualizada',\n  onDiet: false\n};\ncy.request({\n  method: 'PUT',\n  url: `/v1/meals/${mealId}`,\n  headers: {\n    Cookie: `sessionId=${sessionId}`\n  },\n  body: updatedMeal\n}).then(response => {\n  expect(response.status).to.eq(200);\n  expect(response.body).to.have.property('meal');\n  expect(response.body.meal[0]).to.have.property('name', updatedMeal.name);\n  expect(response.body.meal[0]).to.have.property('description', updatedMeal.description);\n  // Verificar se on_diet é 0 (falso) ou false\n  const onDietValue = response.body.meal[0].on_diet;\n  expect(onDietValue === false || onDietValue === 0, `on_diet deveria ser false ou 0, mas foi ${onDietValue}`).to.be.true;\n});",
+              "err": {},
+              "uuid": "545f0dbf-30c6-4a42-a370-2c229c5d6ee4",
+              "parentUUID": "38535717-1a00-487e-9d15-c6833546b24d",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "M05: Deve obter as métricas das refeições",
+              "fullTitle": "02. API de Refeições M05: Deve obter as métricas das refeições",
+              "timedOut": null,
+              "duration": 67,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  method: 'GET',\n  url: '/v1/meals/metrics',\n  headers: {\n    Cookie: `sessionId=${sessionId}`\n  }\n}).then(response => {\n  expect(response.status).to.eq(200);\n  expect(response.body).to.have.property('total');\n  expect(response.body).to.have.property('onDiet');\n  expect(response.body).to.have.property('offDiet');\n  expect(response.body).to.have.property('bestSequence');\n});",
+              "err": {},
+              "uuid": "3ca6a752-317f-4179-bf45-7775dfd1a726",
+              "parentUUID": "38535717-1a00-487e-9d15-c6833546b24d",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "M06: Deve excluir uma refeição",
+              "fullTitle": "02. API de Refeições M06: Deve excluir uma refeição",
+              "timedOut": null,
+              "duration": 168,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Verificar se temos um ID de refeição válido\nexpect(mealId).to.not.be.null;\ncy.log(`Excluindo refeição com ID: ${mealId}`);\ncy.request({\n  method: 'DELETE',\n  url: `/v1/meals/${mealId}`,\n  headers: {\n    Cookie: `sessionId=${sessionId}`\n  }\n}).then(response => {\n  expect(response.status).to.eq(204);\n  // Verificar se a refeição foi realmente excluída\n  cy.request({\n    method: 'GET',\n    url: `/v1/meals/${mealId}`,\n    headers: {\n      Cookie: `sessionId=${sessionId}`\n    },\n    failOnStatusCode: false\n  }).then(getResponse => {\n    expect(getResponse.status).to.eq(404);\n  });\n});",
+              "err": {},
+              "uuid": "48ab4d5a-d282-4ff1-847a-d4773cbf5818",
+              "parentUUID": "38535717-1a00-487e-9d15-c6833546b24d",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "5b6450dc-c651-475c-85b7-5ece330441c3",
+            "08d82512-79a5-4f64-955d-aa2a87650131",
+            "a6578363-9430-4046-8b9f-96555203593c",
+            "545f0dbf-30c6-4a42-a370-2c229c5d6ee4",
+            "3ca6a752-317f-4179-bf45-7775dfd1a726",
+            "48ab4d5a-d282-4ff1-847a-d4773cbf5818"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 1180,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

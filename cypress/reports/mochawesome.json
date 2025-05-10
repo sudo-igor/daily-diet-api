@@ -1,0 +1,162 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2025-05-10T04:27:14.919Z",
+    "end": "2025-05-10T04:27:16.238Z",
+    "duration": 1319,
+    "testsRegistered": 4,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "68b620d0-4380-4869-8d75-a391d9170337",
+      "title": "",
+      "fullFile": "cypress\\e2e\\01-users.cy.js",
+      "file": "cypress\\e2e\\01-users.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "5c638ed7-2671-41de-a0ba-7b6405d68754",
+          "title": "01. API de Usuários",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "U01: Deve listar todos os usuários",
+              "fullTitle": "01. API de Usuários U01: Deve listar todos os usuários",
+              "timedOut": null,
+              "duration": 892,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  method: 'GET',\n  url: '/v1/users/list',\n  failOnStatusCode: false\n}).then(response => {\n  if (response.status === 200) {\n    expect(response.body).to.have.property('users');\n    expect(response.body.users).to.be.an('array');\n  } else {\n    // API pode não permitir listar todos os usuários sem permissão de admin\n    expect(response.status).to.be.oneOf([401, 403, 404]);\n  }\n});",
+              "err": {},
+              "uuid": "f3299a92-e7c0-4f2e-8a00-d5cf6448e707",
+              "parentUUID": "5c638ed7-2671-41de-a0ba-7b6405d68754",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "U02: Deve obter o perfil do usuário atual",
+              "fullTitle": "01. API de Usuários U02: Deve obter o perfil do usuário atual",
+              "timedOut": null,
+              "duration": 107,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Garantir que temos um sessionId válido\nexpect(sessionId).not.to.be.null;\ncy.request({\n  method: 'GET',\n  url: '/v1/users',\n  headers: {\n    Cookie: `sessionId=${sessionId}`\n  },\n  failOnStatusCode: false\n}).then(response => {\n  expect(response.status).to.eq(200);\n  expect(response.body).to.have.property('user');\n  expect(response.body.user).to.be.an('object');\n});",
+              "err": {},
+              "uuid": "5bab3167-3dac-4c8b-8e3c-64bd402b477e",
+              "parentUUID": "5c638ed7-2671-41de-a0ba-7b6405d68754",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "U03: Deve atualizar o perfil do usuário",
+              "fullTitle": "01. API de Usuários U03: Deve atualizar o perfil do usuário",
+              "timedOut": null,
+              "duration": 142,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Garantir que temos um sessionId válido\nexpect(sessionId).not.to.be.null;\nconst updatedProfile = {\n  firstName: 'Nome Atualizado',\n  lastName: 'Sobrenome Atualizado'\n};\ncy.request({\n  method: 'PUT',\n  url: '/v1/users/profile',\n  headers: {\n    Cookie: `sessionId=${sessionId}`\n  },\n  body: updatedProfile,\n  failOnStatusCode: false\n}).then(response => {\n  expect(response.status).to.eq(200);\n  expect(response.body).to.have.property('user');\n  // Verificar o formato da resposta\n  const user = response.body.user;\n  if (Array.isArray(user)) {\n    // Se for um array, verificar o primeiro elemento\n    expect(user[0]).to.have.property('first_name', updatedProfile.firstName);\n    expect(user[0]).to.have.property('last_name', updatedProfile.lastName);\n  } else {\n    // Se for um objeto, verificar diretamente\n    expect(user).to.have.property('first_name', updatedProfile.firstName);\n    expect(user).to.have.property('last_name', updatedProfile.lastName);\n  }\n});",
+              "err": {},
+              "uuid": "c20ab3b0-74a9-48a3-af1d-33dfa1d51c98",
+              "parentUUID": "5c638ed7-2671-41de-a0ba-7b6405d68754",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "U04: Deve fazer logout do usuário",
+              "fullTitle": "01. API de Usuários U04: Deve fazer logout do usuário",
+              "timedOut": null,
+              "duration": 147,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Garantir que temos um sessionId válido\nexpect(sessionId).not.to.be.null;\ncy.request({\n  method: 'POST',\n  url: '/v1/users/logout',\n  headers: {\n    Cookie: `sessionId=${sessionId}`\n  },\n  failOnStatusCode: false\n}).then(response => {\n  expect(response.status).to.be.oneOf([200, 204]);\n});",
+              "err": {},
+              "uuid": "29c5c4af-9b89-4767-b9ca-81a55e5d92ff",
+              "parentUUID": "5c638ed7-2671-41de-a0ba-7b6405d68754",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "f3299a92-e7c0-4f2e-8a00-d5cf6448e707",
+            "5bab3167-3dac-4c8b-8e3c-64bd402b477e",
+            "c20ab3b0-74a9-48a3-af1d-33dfa1d51c98",
+            "29c5c4af-9b89-4767-b9ca-81a55e5d92ff"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 1288,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": true,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

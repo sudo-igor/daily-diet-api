@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="10" failures="0" errors="0" time="4.002">
+  <testsuite name="Validação de Refeição" errors="0" failures="0" skipped="0" timestamp="2025-05-10T04:26:50" time="1.729" tests="5">
+    <testcase classname="Validação de Refeição Deve validar dados de refeição corretos" name="Validação de Refeição Deve validar dados de refeição corretos" time="0.012">
+    </testcase>
+    <testcase classname="Validação de Refeição Deve rejeitar nome vazio" name="Validação de Refeição Deve rejeitar nome vazio" time="0.002">
+    </testcase>
+    <testcase classname="Validação de Refeição Deve rejeitar descrição vazia" name="Validação de Refeição Deve rejeitar descrição vazia" time="0.001">
+    </testcase>
+    <testcase classname="Validação de Refeição Deve rejeitar data inválida" name="Validação de Refeição Deve rejeitar data inválida" time="0.001">
+    </testcase>
+    <testcase classname="Validação de Refeição Deve rejeitar calorias negativas" name="Validação de Refeição Deve rejeitar calorias negativas" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Validação de Usuário" errors="0" failures="0" skipped="0" timestamp="2025-05-10T04:26:50" time="1.729" tests="5">
+    <testcase classname="Validação de Usuário Deve validar dados de usuário corretos" name="Validação de Usuário Deve validar dados de usuário corretos" time="0.014">
+    </testcase>
+    <testcase classname="Validação de Usuário Deve rejeitar email inválido" name="Validação de Usuário Deve rejeitar email inválido" time="0.001">
+    </testcase>
+    <testcase classname="Validação de Usuário Deve rejeitar senha muito curta" name="Validação de Usuário Deve rejeitar senha muito curta" time="0.001">
+    </testcase>
+    <testcase classname="Validação de Usuário Deve rejeitar nome vazio" name="Validação de Usuário Deve rejeitar nome vazio" time="0.001">
+    </testcase>
+    <testcase classname="Validação de Usuário Deve rejeitar valor inválido no campo goal" name="Validação de Usuário Deve rejeitar valor inválido no campo goal" time="0.001">
+    </testcase>
+  </testsuite>
+</testsuites>
